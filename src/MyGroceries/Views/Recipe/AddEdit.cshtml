@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Edit Recipe: " + Model.Name;
+}
+
+@model MyGroceries.ViewModels.RecipeViewModels.AddEditRecipeViewModel
+
+<form asp-controller="Recipe" asp-action="AddEdit" asp-route-id="@Model.RecipeID" method="post">
+    <h3>Name:</h3>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <h3>Ingredients:</h3>
+
+    @if (Model.Ingredients.Count == 0)
+    {
+        <p>No ingredients?!? Not even water?</p>
+    }
+    else
+    {
+
+        @foreach (var ingredient in Model.Ingredients)
+        {
+                <span>
+                    @ingredient.Item.Name:
+                    @Math.Round(ingredient.Quantity, 2)
+                    @if (@ingredient.Item.Unit.Name != "count")
+                    {
+                        @ingredient.Item.Unit.Name
+                    }
+                </span>
+                <br>
+        }
+        
+        <br>
+    }
+    
+    <p>
+        <a asp-controller="Recipe" asp-action="AddIngredient" asp-route-id="@Model.RecipeID">Add Ingredients</a> |
+        <a asp-controller="Recipe" asp-action="RemoveIngredient" asp-route-id="@Model.RecipeID">Remove Ingredients</a>
+    </p>
+
+    <h3>Directions:</h3>
+
+    <div>
+        <label asp-for="Directions"></label>
+        <textarea class="form-control" rows="10" cols="80" asp-for="Directions"></textarea>
+        <span asp-validation-for="Directions"></span>
+    </div>
+    <input type="submit" value="Update/Save Recipe)" />
+</form>
+
+   

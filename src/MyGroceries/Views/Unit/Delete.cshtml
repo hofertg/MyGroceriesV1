@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Delete Units";
+}
+
+@model MyGroceries.ViewModels.UnitViewModels.DeleteUnitViewModel
+
+<form asp-controller="Unit" asp-action="Delete" method="post">
+    @foreach (var unit in Model.Units)
+    {
+        <input type="checkbox" name="units" id="@unit.ID" value="@unit.ID" />
+        <label for="@unit.ID">@unit.Name</label>
+        <br />
+    }
+    <input type="submit" value="Remove Selected Unit(s)" />
+</form>

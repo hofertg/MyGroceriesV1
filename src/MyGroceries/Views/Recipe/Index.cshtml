@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Recipes";
+}
+
+@model MyGroceries.ViewModels.RecipeViewModels.IndexRecipeViewModel
+
+<h3>Create New Recipe:</h3>
+
+<form asp-controller="Recipe" asp-action="Index" method="post">
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <input type="submit" value="Add Recipe" />
+
+</form>
+
+<br />
+
+<h3>Recipes:</h3>
+
+@if (Model.Recipes.Count == 0)
+{
+    <p>No recipes yet!</p>
+}
+else
+{
+    <ul>
+        @foreach (var recipe in Model.Recipes)
+        {
+            <li><a asp-controller="Recipe" asp-action="View" asp-route-id="@recipe.ID">@recipe.Name</a></li>
+        }
+    </ul>
+}
+
+<a asp-controller="Recipe" asp-action="Delete">Remove recipes</a>

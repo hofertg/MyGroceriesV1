@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "Units";
+}
+
+@model MyGroceries.ViewModels.UnitViewModels.IndexUnitViewModel
+
+<h3>Create New Unit:</h3>
+
+
+<form asp-controller="Unit" asp-action="Index" method="post">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class="row">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="row">
+                        <input class="form-control" asp-for="Name" />
+                    </div>
+                    <div class="row">
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <div class="row">
+                        <label asp-for="BaseUnit"></label>
+                    </div>
+                    <div class="row">
+                        <select asp-for="BaseUnit" asp-items="Model.BaseUnits"></select>
+                    </div>
+                    <div class="row">
+                        <span asp-validation-for="BaseUnit"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class="row">
+                        <label asp-for="ConversionToBaseFactor"></label>
+                    </div>
+                    <div class="row">
+                        <input class="form-control" asp-for="ConversionToBaseFactor" />
+                    </div>
+                    <div class="row">
+                        <span asp-validation-for="ConversionToBaseFactor"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <input type="submit" value="Add Unit" />
+        </div>
+    </div>
+</form>
+
+<br />
+
+<h3>Current Units:</h3>
+
+@if (Model.Units.Count == 0)
+{
+    <p>No units yet!</p>
+}
+else
+{
+    <table class="table">
+
+        <tr>
+            <th>Name</th>
+            <th>Base Unit</th>
+            <th>Conversion Factor to Base Unit</th>
+        </tr>
+
+        @foreach (var unit in Model.Units)
+        {
+            <tr>
+                <td>@unit.Name</td>
+                <td>@unit.BaseUnit</td>
+                <td>@unit.ConversionToBaseFactor</td>
+            </tr>
+        }
+    </table>
+    
+}
+
+<a asp-controller="Unit" asp-action="Delete">Delete units</a>

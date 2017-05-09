@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Shopping List: " + Model.ShoppingList.Name;
+}
+
+@model MyGroceries.ViewModels.ShoppingListViewModels.ViewShoppingListViewModel
+
+<h4>Add New Item:</h4>
+<form asp-controller="ShoppingList" asp-action="View" asp-route-id="@Model.ShoppingList.ID" method="post">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class="row">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="row">
+                        <input class="form-control" asp-for="Name" />
+                    </div>
+                    <div class="row">
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class="row">
+                        <label asp-for="Quantity"></label>
+                    </div>
+                    <div class="row">
+                        <input class="form-control" asp-for="Quantity" />
+                    </div>
+                    <div class="row">
+                        <span asp-validation-for="Quantity"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <div class="row">
+                        <label asp-for="UnitID"></label>
+                    </div>
+                    <div class="row">
+                        <select asp-for="UnitID" asp-items="Model.Units"></select>
+                    </div>
+                    <div class="row">
+                        <span asp-validation-for="UnitID"></span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <input type="submit" value="Add Item" />
+        </div>
+    </div>
+</form>
+
+<h4>Items:</h4>
+
+@if (Model.Items.Count == 0)
+{
+    <p>No items yet!</p>
+}
+else
+{
+    <ul>
+        @foreach (var shoppingListItem in Model.Items)
+        {
+            <li>
+                @if (shoppingListItem.StrikeThrough == true)
+                {
+                     <s>
+                        @shoppingListItem.Item.Name:
+                        @Math.Round(shoppingListItem.Quantity, 2)
+                        @if (@shoppingListItem.Item.Unit.Name != "count")
+                        {
+                            @shoppingListItem.Item.Unit.Name
+                        }
+                    </s>
+                }
+                else
+                {
+                    <span>
+                        @shoppingListItem.Item.Name:
+                        @Math.Round(shoppingListItem.Quantity, 2)
+                        @if (@shoppingListItem.Item.Unit.Name != "count")
+                        {
+                            @shoppingListItem.Item.Unit.Name
+                        }
+                    </span>
+                }
+                
+            </li>
+        }
+    </ul>
+    
+}
+
+
+
+<p><a asp-controller="ShoppingList" asp-action="Manage" asp-route-id="@Model.ShoppingList.ID">Manage List</a></p>

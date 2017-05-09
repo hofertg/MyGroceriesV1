@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Items";
+}
+
+@model MyGroceries.ViewModels.ItemViewModels.IndexItemViewModel
+
+<h3>Create New Item:</h3>
+
+
+<form asp-controller="Item" asp-action="Index" method="post">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class="row">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="row">
+                        <input class="form-control" asp-for="Name" />
+                    </div>
+                    <div class="row">
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <div class="row">
+                        <label asp-for="UnitID"></label>
+                    </div>
+                    <div class="row">
+                        <select asp-for="UnitID" asp-items="Model.Units"></select>
+                    </div>
+                    <div class="row">
+                        <span asp-validation-for="UnitID"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <input type="submit" value="Add Item" />
+        </div>
+    </div>
+</form>
+
+<br />
+
+<h3>Current Items:</h3>
+
+@if (Model.Items.Count == 0)
+{
+    <p>No items yet!</p>
+}
+else
+{
+    <table class="table">
+
+        <tr>
+            <th>Name</th>
+            <th>Unit</th>
+        </tr>
+
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Unit.Name</td>
+            </tr>
+        }
+    </table>
+
+}
+
+<a asp-controller="Item" asp-action="Delete">Delete items</a>

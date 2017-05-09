@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Add Ingredient: " + Model.Recipe.Name;
+}
+
+@model MyGroceries.ViewModels.RecipeViewModels.AddIngredientRecipeViewModel
+
+<h3>Add Ingredient:</h3>
+
+<form asp-controller="Recipe" asp-action="AddIngredient" asp-route-id="@Model.Recipe.ID" method="post">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class="row">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="row">
+                        <input class="form-control" asp-for="Name" />
+                    </div>
+                    <div class="row">
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class="row">
+                        <label asp-for="Quantity"></label>
+                    </div>
+                    <div class="row">
+                        <input class="form-control" asp-for="Quantity" />
+                    </div>
+                    <div class="row">
+                        <span asp-validation-for="Quantity"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <div class="row">
+                        <label asp-for="UnitID"></label>
+                    </div>
+                    <div class="row">
+                        <select asp-for="UnitID" asp-items="Model.Units"></select>
+                    </div>
+                    <div class="row">
+                        <span asp-validation-for="UnitID"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <input type="submit" value="Add Ingredient" />
+        </div>
+    </div>
+</form>
+
+<h3>Current Ingredients:</h3>
+
+@if (Model.Items.Count == 0)
+{
+    <p>No items yet!</p>
+}
+else
+{
+    <ul>
+        @foreach (var recipeItem in Model.Items)
+        {
+            <li>
+                        @recipeItem.Item.Name:
+                        @Math.Round(recipeItem.Quantity, 2)
+                        @if (@recipeItem.Item.Unit.Name != "count")
+                        {
+                            @recipeItem.Item.Unit.Name
+                        }
+                  
+            </li>
+        }
+    </ul>
+}

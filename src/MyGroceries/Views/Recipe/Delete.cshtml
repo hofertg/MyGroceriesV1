@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Delete Recipes";
+}
+
+@model MyGroceries.ViewModels.RecipeViewModels.DeleteRecipeViewModel
+
+<form asp-controller="Recipe" asp-action="Delete" method="post">
+    @foreach (var recipe in Model.Recipes)
+    {
+        <input type="checkbox" name="recipes" id="@recipe.ID" value="@recipe.ID" />
+        <label for="@recipe.ID">@recipe.Name</label>
+        <br />
+    }
+    <input type="submit" value="Remove Selected Recipe(s)" />
+</form>

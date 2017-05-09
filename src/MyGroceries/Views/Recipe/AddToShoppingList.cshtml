@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Add " + Model.Recipe.Name + " ingredients to a Shopping List";
+}
+
+@model MyGroceries.ViewModels.RecipeViewModels.AddToShoppingListRecipeViewModel
+
+<h3>Ingredients too add:</h3>
+<form asp-controller="Recipe" asp-action="AddToShoppingList" method="post">
+
+    @foreach (var ingredient in Model.Items)
+    {
+        <input type="checkbox" name="ingredientIds" id="@ingredient.ItemID" value="@ingredient.ItemID" checked />
+        <label for="@ingredient.ItemID">
+            @ingredient.Item.Name:
+            @Math.Round(ingredient.Quantity, 2)
+            @if (@ingredient.Item.Unit.Name != "count")
+            {
+                @ingredient.Item.Unit.Name
+            }
+        </label>
+        <br />
+    }
+    <div class="form-group">
+        <label asp-for="ShoppingListID"></label>
+        <select asp-for="ShoppingListID" asp-items="Model.ShoppingLists"></select>
+    </div>
+    <input type="hidden" name="recipeId" value="@Model.Recipe.ID" />
+    <input type="submit" value="Add selected ingredient(s) to list" />
+</form>

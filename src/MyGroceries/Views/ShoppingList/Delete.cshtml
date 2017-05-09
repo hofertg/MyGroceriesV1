@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Delete Shopping Lists";
+}
+
+@model MyGroceries.ViewModels.ShoppingListViewModels.DeleteShoppingListViewModel
+
+<form asp-controller="ShoppingList" asp-action="Delete" method="post">
+    @foreach (var shoppingList in Model.ShoppingLists)
+    {
+        <input type="checkbox" name="shoppingLists" id="@shoppingList.ID" value="@shoppingList.ID" />
+        <label for="@shoppingList.ID">@shoppingList.Name</label>
+        <br />
+    }
+    <input type="submit" value="Remove Selected Shopping List(s)" />
+</form>

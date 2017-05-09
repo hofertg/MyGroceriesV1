@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Recipe: " + Model.Recipe.Name;
+}
+
+@model MyGroceries.ViewModels.RecipeViewModels.ViewRecipeViewModel
+
+<h3>Ingredients:</h3>
+
+@if (Model.Ingredients.Count == 0)
+{
+    <p>No ingredients?!? Not even water?</p>
+}
+else
+{
+    <ul>
+        @foreach (var ingredient in Model.Ingredients)
+        {
+            <li>
+                @ingredient.Item.Name:
+                @Math.Round(ingredient.Quantity, 2)
+                @if (@ingredient.Item.Unit.Name != "count")
+                {
+                    @ingredient.Item.Unit.Name
+                }
+            </li>
+        }
+    </ul>
+    <a asp-controller="Recipe" asp-action="AddToShoppingList" asp-route-id="@Model.Recipe.ID">Add Ingredients to a Shopping List</a>
+}
+
+<h3>Directions:</h3>
+
+<p>@Model.Recipe.Directions</p>
+
+
+<p><a asp-controller="Recipe" asp-action="AddEdit" asp-route-id="@Model.Recipe.ID">Edit Recipe</a></p>

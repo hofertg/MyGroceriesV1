@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Shopping Lists";
+}
+
+@model MyGroceries.ViewModels.ShoppingListViewModels.IndexShoppingListViewModel
+
+<h3>Create New List:</h3>
+
+<form asp-controller="ShoppingList" asp-action="Index" method="post">
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <input type="submit" value="Add Shopping List" />
+
+</form>
+
+<br />
+
+<h3>Current Lists:</h3>
+
+@if (Model.ShoppingLists.Count == 0)
+{
+    <p>No shopping lists yet!</p>
+}
+else
+{
+    <ul>
+        @foreach (var shoppingList in Model.ShoppingLists)
+        {
+            <li><a asp-controller="ShoppingList" asp-action="View" asp-route-id="@shoppingList.ID">@shoppingList.Name</a></li>
+        }
+    </ul>
+}
+
+<a asp-controller="ShoppingList" asp-action="Delete">Remove shopping lists</a>

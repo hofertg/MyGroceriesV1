@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Manage: " + Model.ShoppingList.Name;
+}
+
+@model MyGroceries.ViewModels.ShoppingListViewModels.ManageShoppingListViewModel
+
+<form asp-controller="ShoppingList" asp-action="Manage" asp-route-id="@Model.ShoppingList.ID" method="post">
+
+    @foreach (var item in Model.Items)
+    {
+        <input type="checkbox" name="itemIds" id="@item.ItemID" value="@item.ItemID" />
+        <label for="@item.ItemID">
+            @if (item.StrikeThrough == true)
+                {
+                <s>
+                    @item.Item.Name:
+                    @Math.Round(item.Quantity, 2)
+                    @if (@item.Item.Unit.Name != "count")
+                    {
+                        @item.Item.Unit.Name
+                    }
+                </s>
+            }
+            else
+            {
+                <span>
+                    @item.Item.Name :
+                    @Math.Round(item.Quantity, 2)
+                    @if (@item.Item.Unit.Name != "count")
+                    {
+                        @item.Item.Unit.Name
+                    }
+                </span>
+            }
+        </label>
+        <br />
+    }
+    <select id="action" name="action" asp-items="Model.Actions"></select>
+    <input type="submit" value="Go" />
+</form>
